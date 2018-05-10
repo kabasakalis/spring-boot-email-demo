@@ -1,28 +1,42 @@
-package com.kabasakalis.emaildemo.services;
+package com.kabasakalis.emaildemo.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import javax.mail.MessagingException;
 
 import com.kabasakalis.emaildemo.domain.Email;
+import com.kabasakalis.emaildemo.services.EmailService;
 
 @Controller
 public class EmailController {
 
-    @GetMapping("/email-form")
-    public String emailForm(Model model) {
-        model.addAttribute("email", new Email());
-        return "email-form";
-    }
+  private static final String COMPANY_EMAIL = "kabasakalis@gmail.com";
+  private static final String FROM_COMPANY_EMAIL = "kabasakalis@gmail.com";
 
-    @PostMapping("/send-email")
-    public String emailSubmit(@ModelAttribute Email email) {
-      // Use service to send email
-        return "result";
-    }
+  @Autowired
+  private EmailService emailService;
+
+  @GetMapping("/email-form")
+  public String emailForm(Model model) {
+    model.addAttribute("email", new Email());
+    return "email-form";
+  }
+
+  @PostMapping("/send-email")
+  public String emailSubmit(@ModelAttribute Email email) throws MessagingException  {
+    // Use service to send email
+    emailService.sendEmail(
+        FROM_COMPANY_EMAIL,
+        COMPANY_EMAIL,
+        email.getClientEmail(),
+        email.getEmailSubject(),
+        email.getContent());
+    return "result";
+  }
 
 }
 
