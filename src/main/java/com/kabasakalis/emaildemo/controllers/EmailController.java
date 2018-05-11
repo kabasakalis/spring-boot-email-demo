@@ -9,9 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.mail.MessagingException;
 
 import com.kabasakalis.emaildemo.domain.Email;
-import com.kabasakalis.emaildemo.services.EmailService;
-
-
 import com.kabasakalis.emaildemo.services.EmailLibrary;
 
 @Controller
@@ -20,21 +17,22 @@ public class EmailController {
   private static final String COMPANY_EMAIL = "kabasakalis@gmail.com";
   private static final String FROM_COMPANY_EMAIL = "kabasakalis@gmail.com";
 
+  // @Autowired
+  // private EmailService emailService;
+
   @Autowired
-  private EmailService emailService;
+  private EmailLibrary emailLibrary;
 
   @GetMapping("/email-form")
   public String emailForm(Model model) {
-
-    System.out.println(EmailLibrary.testLib());
     model.addAttribute("email", new Email());
     return "email-form";
   }
 
   @PostMapping("/send-email")
   public String emailSubmit(@ModelAttribute Email email) throws MessagingException  {
-    // Use service to send email
-    emailService.sendEmail(
+    // Use email to send email
+    emailLibrary.sendEmail(
         FROM_COMPANY_EMAIL,
         COMPANY_EMAIL,
         email.getClientEmail(),
