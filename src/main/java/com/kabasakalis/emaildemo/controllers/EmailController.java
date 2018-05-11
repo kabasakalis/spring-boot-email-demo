@@ -11,6 +11,9 @@ import javax.mail.MessagingException;
 import com.kabasakalis.emaildemo.domain.Email;
 import com.kabasakalis.emaildemo.services.EmailService;
 
+
+import com.kabasakalis.emaildemo.services.EmailLibrary;
+
 @Controller
 public class EmailController {
 
@@ -22,6 +25,8 @@ public class EmailController {
 
   @GetMapping("/email-form")
   public String emailForm(Model model) {
+
+    System.out.println(EmailLibrary.testLib());
     model.addAttribute("email", new Email());
     return "email-form";
   }

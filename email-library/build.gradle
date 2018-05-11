@@ -10,21 +10,20 @@ buildscript {
   }
 }
 
+// project.name = 'email-library'
+
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
-
-group = 'com.kabasakalis.emaildemo'
+group = 'com.kabasakalis.email'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
 
 jar {
     enabled = true
 }
-
-
 
 repositories {
   mavenCentral()
@@ -34,12 +33,10 @@ repositories {
 dependencies {
   compile('org.springframework.boot:spring-boot-starter-actuator')
     compile('org.springframework.boot:spring-boot-starter-mail')
+    compile('org.springframework.boot:spring-boot-starter-quartz')
     compile('org.springframework.boot:spring-boot-starter-thymeleaf')
     compile('org.springframework.boot:spring-boot-starter-web')
     compile("org.thymeleaf:thymeleaf-spring4:2.1.2.RELEASE")
-    // compile project('com.kabasakalis:email-library:0.0.1-SNAPSHOT')
-    compile project(':email-library')
     runtime('org.springframework.boot:spring-boot-devtools')
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
-
